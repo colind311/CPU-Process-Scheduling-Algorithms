@@ -45,7 +45,7 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                         running_process.next_burst_times();
                         prev_tau = running_process.get_tau();
                         if (running_process.get_remaining_bursts() > 0) {
-                            if (true) {
+                            if (t < 1000) {
                                 std::cout << "time " << t << "ms: ";
                                 std::cout << "Process " << running_process.get_id() << " (tau " << running_process.get_tau();
                                 std::cout << "ms) completed a CPU burst; " << running_process.get_remaining_bursts();
@@ -54,13 +54,13 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                                 std::cout << pqueue_string(ready_queue) << std::endl;
                             }
                             running_process.next_tau();
-                            if (true) {
+                            if (t < 1000) {
                                 std::cout << "time " << t << "ms: ";
                                 std::cout << "Recalculated tau from " << prev_tau << "ms to " << running_process.get_tau();
                                 std::cout << "ms for process " << running_process.get_id() << " ";
                                 std::cout << pqueue_string(ready_queue) << std::endl;
                             }
-                            if (true) {
+                            if (t < 1000) {
                                 std::cout << "time " << t << "ms: ";
                                 std::cout << "Process " << running_process.get_id() << " switching out of CPU; ";
                                 std::cout << "will block on I/O until time " << t + running_process.get_io_burst_time() + context_switch;
@@ -112,7 +112,7 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                     doing_switch = false;
                     running_process = switch_process;
                     t_cs = context_switch;
-                    if (true) {
+                    if (t < 1000) {
                         std::cout << "time " << t << "ms: ";
                         std::cout << "Process " << running_process.get_id() << " (tau " << running_process.get_tau();
                         std::cout << "ms) started using the CPU for ";
@@ -131,7 +131,7 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                         num_context_switches++;
                         t_cs--;
                         wait_time--;
-                        if (true) {
+                        if (t < 1000) {
                             std::cout << "time " << t << "ms: ";
                             std::cout << "Process " << ready_queue.top().get_id() << " (tau " << ready_queue.top().get_tau();
                             std::cout << "ms) will preempt " << running_process.get_id() << " ";
@@ -174,7 +174,7 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                             running_process.increment_tau();
                             running_cpu_bursts--;
                         }
-                        if (true) {
+                        if (t < 1000) {
                             std::cout << "time " << t << "ms: ";
                             std::cout << "Process " << io_queue[k].get_id() << " (tau " << io_queue[k].get_tau();
                             std::cout << "ms) completed I/O; ";
@@ -201,7 +201,7 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                 //Don't include wait time for a newly introduced process 
                 //in the ready queue
                 wait_time--;
-                if (true) {
+                if (t < 1000) {
                     std::cout << "time " << t << "ms: ";
                     std::cout << "Process " << processes[i].get_id() << " (tau " << processes[i].get_tau();
                     std::cout << "ms) arrived; ";
@@ -209,16 +209,16 @@ void SRT(int num_processes, int seed, int context_switch, double lambda, int upp
                 if (!running_process.is_empty() && \
                     ready_queue.top().get_remaining_tau() < running_process.get_remaining_tau() && \
                     !doing_preemption) {
-                    if (true)
+                    if (t < 1000)
                         std::cout << "preempting " << running_process.get_id() << " ";
                     doing_preemption = true;
                     preemptions++;
                 }
                 else {
-                    if (true)
+                    if (t < 1000)
                         std::cout << "added to ready queue ";
                 }
-                if (true)
+                if (t < 1000)
                     std::cout << pqueue_string(ready_queue) << std::endl;
             }
         }
